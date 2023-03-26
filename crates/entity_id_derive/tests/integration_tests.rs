@@ -7,6 +7,11 @@ use entity_id_derive::EntityId;
 struct UserId(Ulid);
 
 #[test]
+fn prefix_associated_const() {
+    assert_eq!(UserId::PREFIX, "user")
+}
+
+#[test]
 fn new_generates_an_id_with_the_given_prefix() {
     let user_id = UserId::new();
 

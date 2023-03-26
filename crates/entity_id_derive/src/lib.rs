@@ -96,8 +96,15 @@ pub fn entity_id(input: TokenStream) -> TokenStream {
 
     let prefix = prefix.unwrap_or("entity".to_string());
 
+    let prefix_doc_string = format!("The prefix used for a [`{}`].", name);
+    let new_doc_string = format!("Returns a new [`{}`].", name);
+
     let expanded = quote! {
         impl #name {
+            #[doc = #prefix_doc_string]
+            pub const PREFIX: &'static str = #prefix;
+
+            #[doc = #new_doc_string]
             pub fn new() -> Self {
                 Self(ulid::Ulid::new())
             }
