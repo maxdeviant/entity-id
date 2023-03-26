@@ -1,8 +1,9 @@
 # entity_id
 
-[![Crates.io](https://img.shields.io/crates/v/entity_id.svg)](https://crates.io/crates/entity_id)
-[![Docs.rs](https://docs.rs/entity_id/badge.svg)](https://docs.rs/entity_id/)
-[![Crates.io](https://img.shields.io/crates/l/entity_id.svg)](https://github.com/maxdeviant/entity-id/blob/master/LICENSE)
+[![crates.io](https://img.shields.io/crates/v/entity_id.svg)](https://crates.io/crates/entity_id)
+[![docs.rs](https://docs.rs/entity_id/badge.svg)](https://docs.rs/entity_id/)
+[![crates.io](https://img.shields.io/crates/l/entity_id.svg)](https://github.com/maxdeviant/entity-id/blob/master/LICENSE)
+[![CI](https://github.com/maxdeviant/entity-id/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/maxdeviant/entity-id/actions/workflows/ci.yml)
 
 Production-grade entity IDs for your web application.
 
