@@ -1,5 +1,6 @@
 mod symbols;
 
+use proc_macro2::TokenStream;
 use quote::{quote, ToTokens};
 use syn::{self, DeriveInput, Token};
 
@@ -61,6 +62,26 @@ pub fn expand_derive_entity_id(
     let prefix_doc_string = format!("The prefix used for a [`{}`].", name);
     let new_doc_string = format!("Returns a new [`{}`].", name);
 
+    let uuid_impls = if cfg!(feature = "uuid") {
+        quote! {
+            #[automatically_derived]
+            impl From<uuid::Uuid> for #name {
+                fn from(value: uuid::Uuid) -> Self {
+                    Self(ulid::Ulid::from(value))
+                }
+            }
+
+            #[automatically_derived]
+            impl From<#name> for uuid::Uuid {
+                fn from(value: #name) -> Self {
+                    Self::from(value.0)
+                }
+            }
+        }
+    } else {
+        TokenStream::new()
+    };
+
     let expanded = quote! {
         impl #name {
             #[doc = #prefix_doc_string]
@@ -83,21 +104,7 @@ pub fn expand_derive_entity_id(
             }
         }
 
-        #[cfg(feature = "uuid")]
-        #[automatically_derived]
-        impl From<uuid::Uuid> for #name {
-            fn from(value: uuid::Uuid) -> Self {
-                Self(ulid::Ulid::from(value))
-            }
-        }
-
-        #[cfg(feature = "uuid")]
-        #[automatically_derived]
-        impl From<#name> for uuid::Uuid {
-            fn from(value: #name) -> Self {
-                Self::from(value.0)
-            }
-        }
+        #uuid_impls
 
         #[automatically_derived]
         impl std::str::FromStr for #name {
