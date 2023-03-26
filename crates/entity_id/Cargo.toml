@@ -14,4 +14,8 @@ edition = "2021"
 
 [dependencies]
 entity_id_core = { version = "0.0.2", path = "../entity_id_core" }
-entity_id_derive = { version = "0.0.2", path = "../entity_id_derive" }
+entity_id_derive = { version = "0.0.2", path = "../entity_id_derive", optional = true }
+
+[features]
+default = ["derive"]
+derive = ["entity_id_derive"]
