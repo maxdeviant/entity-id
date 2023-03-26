@@ -118,8 +118,12 @@ pub fn expand_derive_entity_id(input: &mut DeriveInput) -> Result<TokenStream, V
 /// }
 /// ```
 fn generate_self_impl(name: &Ident, prefix: &str) -> TokenStream {
-    let prefix_doc_string = format!("The prefix used for a [`{}`].", name);
+    let prefix_doc_string = format!("The prefix used for a [`{}`].\n\nValue: `{}`", name, prefix);
     let new_doc_string = format!("Returns a new [`{}`].", name);
+    let unprefixed_doc_string = format!(
+        "Returns the string representation of the [`{}`], without its prefix.",
+        name
+    );
 
     quote! {
         impl #name {
@@ -131,6 +135,7 @@ fn generate_self_impl(name: &Ident, prefix: &str) -> TokenStream {
                 Self(ulid::Ulid::new())
             }
 
+            #[doc = #unprefixed_doc_string]
             pub fn unprefixed(&self) -> String {
                 self.0.to_string().to_lowercase()
             }
