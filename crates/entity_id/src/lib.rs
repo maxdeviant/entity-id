@@ -6,4 +6,7 @@ pub use entity_id_core::EntityId;
 pub use entity_id_derive::EntityId;
 
 #[doc(hidden)]
-pub use entity_id_core::unprefix_id;
+#[cfg(feature = "derive")]
+pub mod __private {
+    pub use entity_id_core::unprefix_id;
+}

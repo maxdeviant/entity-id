@@ -6,9 +6,7 @@ use syn::{self, DeriveInput, Token};
 
 use symbols::*;
 
-pub fn expand_derive_entity_id(
-    input: &mut DeriveInput,
-) -> Result<proc_macro2::TokenStream, Vec<syn::Error>> {
+pub fn expand_derive_entity_id(input: &mut DeriveInput) -> Result<TokenStream, Vec<syn::Error>> {
     let name = &input.ident;
 
     let mut prefix = None;
@@ -114,7 +112,7 @@ pub fn expand_derive_entity_id(
             type Err = ulid::DecodeError;
 
             fn from_str(s: &str) -> Result<Self, Self::Err> {
-                let value = entity_id::unprefix_id(&s);
+                let value = entity_id::__private::unprefix_id(&s);
 
                 Ok(Self(ulid::Ulid::from_string(value)?))
             }
@@ -125,7 +123,7 @@ pub fn expand_derive_entity_id(
             type Error = ulid::DecodeError;
 
             fn try_from(value: String) -> Result<Self, Self::Error> {
-                let value = entity_id::unprefix_id(&value);
+                let value = entity_id::__private::unprefix_id(&value);
 
                 Ok(Self(ulid::Ulid::from_string(value)?))
             }
@@ -136,7 +134,7 @@ pub fn expand_derive_entity_id(
             type Error = ulid::DecodeError;
 
             fn try_from(value: &str) -> Result<Self, Self::Error> {
-                let value = entity_id::unprefix_id(value);
+                let value = entity_id::__private::unprefix_id(value);
 
                 Ok(Self(ulid::Ulid::from_string(value)?))
             }
