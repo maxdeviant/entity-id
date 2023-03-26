@@ -113,11 +113,7 @@ fn expand_derive_entity_id(
             type Err = ulid::DecodeError;
 
             fn from_str(s: &str) -> Result<Self, Self::Err> {
-                fn unprefix_id(value: &str) -> &str {
-                    value.split('_').last().to_owned().unwrap_or(value)
-                }
-
-                let value = unprefix_id(&s);
+                let value = entity_id_core::unprefix_id(&s);
 
                 Ok(Self(ulid::Ulid::from_string(value)?))
             }
@@ -127,11 +123,7 @@ fn expand_derive_entity_id(
             type Error = ulid::DecodeError;
 
             fn try_from(value: String) -> Result<Self, Self::Error> {
-                fn unprefix_id(value: &str) -> &str {
-                    value.split('_').last().to_owned().unwrap_or(value)
-                }
-
-                let value = unprefix_id(&value);
+                let value = entity_id_core::unprefix_id(&value);
 
                 Ok(Self(ulid::Ulid::from_string(value)?))
             }
@@ -141,11 +133,7 @@ fn expand_derive_entity_id(
             type Error = ulid::DecodeError;
 
             fn try_from(value: &str) -> Result<Self, Self::Error> {
-                fn unprefix_id(value: &str) -> &str {
-                    value.split('_').last().to_owned().unwrap_or(value)
-                }
-
-                let value = unprefix_id(value);
+                let value = entity_id_core::unprefix_id(value);
 
                 Ok(Self(ulid::Ulid::from_string(value)?))
             }

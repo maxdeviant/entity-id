@@ -1,9 +1,9 @@
 [package]
-name = "entity_id_derive"
+name = "entity_id_core"
 version = "0.0.1"
 description = "Production-ready entity IDs for your web application"
 repository = "https://github.com/maxdeviant/entity-id"
-documentation = "https://docs.rs/entity_id_derive"
+documentation = "https://docs.rs/entity_id_core"
 categories = ["web-programming"]
 keywords = ["entity", "id", "identifier", "ulid", "derive"]
 authors = ["Marshall Bowers <elliott.codes@gmail.com>"]
@@ -12,13 +12,4 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[lib]
-proc-macro = true
-
 [dependencies]
-entity_id_core = { version = "0.0.1", path = "../entity_id_core" }
-proc-macro2 = "1.0.53"
-quote = "1.0.26"
-syn = "2.0.10"
-ulid = { version = "1.0.0", features = ["uuid"] }
-uuid = "1.3.0"
