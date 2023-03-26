@@ -1,6 +1,6 @@
 [package]
 name = "entity_id"
-version = "0.0.2"
+version = "0.0.3"
 description = "Production-grade entity IDs for your web application"
 repository = "https://github.com/maxdeviant/entity-id"
 documentation = "https://docs.rs/entity_id"
@@ -13,8 +13,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-entity_id_core = { version = "0.0.2", path = "../entity_id_core" }
-entity_id_derive = { version = "0.0.2", path = "../entity_id_derive", optional = true }
+entity_id_core = { version = "0.0.3", path = "../entity_id_core" }
+entity_id_derive = { version = "0.0.3", path = "../entity_id_derive", optional = true }
 
 [dev-dependencies]
 ulid = "1.0.0"

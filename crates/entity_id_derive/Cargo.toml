@@ -1,6 +1,6 @@
 [package]
 name = "entity_id_derive"
-version = "0.0.2"
+version = "0.0.3"
 description = "Production-grade entity IDs for your web application"
 repository = "https://github.com/maxdeviant/entity-id"
 documentation = "https://docs.rs/entity_id_derive"
@@ -16,7 +16,7 @@ edition = "2021"
 proc-macro = true
 
 [dependencies]
-entity_id_core = { version = "0.0.2", path = "../entity_id_core" }
+entity_id_core = { version = "0.0.3", path = "../entity_id_core" }
 proc-macro2 = "1.0.53"
 quote = "1.0.26"
 syn = "2.0.10"
