@@ -1,7 +1,7 @@
 [package]
 name = "entity_id_derive"
 version = "0.0.2"
-description = "Production-ready entity IDs for your web application"
+description = "Production-grade entity IDs for your web application"
 repository = "https://github.com/maxdeviant/entity-id"
 documentation = "https://docs.rs/entity_id_derive"
 categories = ["web-programming"]
