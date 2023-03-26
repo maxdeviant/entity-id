@@ -8,7 +8,7 @@ Production-grade entity IDs for your web application.
 
 ## Usage
 
-```rs
+```rust
 use entity_id::EntityId;
 use ulid::Ulid;
 
