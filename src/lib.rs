@@ -109,6 +109,10 @@ pub fn entity_id(input: TokenStream) -> TokenStream {
             pub fn new() -> Self {
                 Self(Ulid::new())
             }
+
+            pub fn unprefixed(&self) -> String {
+                self.0.to_string().to_lowercase()
+            }
         }
 
         impl std::fmt::Display for #name {
