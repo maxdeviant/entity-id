@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fully qualified identifiers in generated `impl`
+
 ## [0.0.1] - 2023-03-25
 
 ### Added

@@ -99,7 +99,7 @@ pub fn entity_id(input: TokenStream) -> TokenStream {
     let expanded = quote! {
         impl #name {
             pub fn new() -> Self {
-                Self(Ulid::new())
+                Self(ulid::Ulid::new())
             }
 
             pub fn unprefixed(&self) -> String {
@@ -113,19 +113,19 @@ pub fn entity_id(input: TokenStream) -> TokenStream {
             }
         }
 
-        impl From<Uuid> for #name {
-            fn from(value: Uuid) -> Self {
-                Self(Ulid::from(value))
+        impl From<uuid::Uuid> for #name {
+            fn from(value: uuid::Uuid) -> Self {
+                Self(ulid::Ulid::from(value))
             }
         }
 
-        impl From<#name> for Uuid {
+        impl From<#name> for uuid::Uuid {
             fn from(value: #name) -> Self {
                 Self::from(value.0)
             }
         }
 
-        impl FromStr for #name {
+        impl std::str::FromStr for #name {
             type Err = ulid::DecodeError;
 
             fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -135,7 +135,7 @@ pub fn entity_id(input: TokenStream) -> TokenStream {
 
                 let value = unprefix_id(&s);
 
-                Ok(Self(Ulid::from_string(value)?))
+                Ok(Self(ulid::Ulid::from_string(value)?))
             }
         }
 
@@ -149,7 +149,7 @@ pub fn entity_id(input: TokenStream) -> TokenStream {
 
                 let value = unprefix_id(&value);
 
-                Ok(Self(Ulid::from_string(value)?))
+                Ok(Self(ulid::Ulid::from_string(value)?))
             }
         }
 
@@ -163,7 +163,7 @@ pub fn entity_id(input: TokenStream) -> TokenStream {
 
                 let value = unprefix_id(value);
 
-                Ok(Self(Ulid::from_string(value)?))
+                Ok(Self(ulid::Ulid::from_string(value)?))
             }
         }
     };

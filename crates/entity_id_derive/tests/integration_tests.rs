@@ -1,7 +1,4 @@
-use std::str::FromStr;
-
 use ulid::Ulid;
-use uuid::Uuid;
 
 use entity_id_derive::EntityId;
 
@@ -25,6 +22,8 @@ fn unprefixed_returns_the_id_without_the_prefix() {
 
 #[test]
 fn entity_id_from_uuid() {
+    use uuid::Uuid;
+
     let uuid = Uuid::try_from("14a20d59-4d68-4bdf-aac6-8e1af037d183").unwrap();
 
     let user_id = UserId::from(uuid);
@@ -34,6 +33,10 @@ fn entity_id_from_uuid() {
 
 #[test]
 fn uuid_from_entity_id() {
+    use std::str::FromStr;
+
+    use uuid::Uuid;
+
     let user_id = UserId::from_str("user_2wdncp35529bet2md0kzxrj0bs").unwrap();
 
     let uuid = Uuid::from(user_id);
