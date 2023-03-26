@@ -1,3 +1,7 @@
+mod derive;
+
+pub use derive::*;
+
 #[inline]
 pub fn unprefix_id(value: &str) -> &str {
     value.split('_').last().unwrap_or(value)

@@ -1,4 +1,5 @@
 use std::fmt::{self, Display};
+
 use syn::{Ident, Path};
 
 #[derive(Debug, Clone, Copy)]
