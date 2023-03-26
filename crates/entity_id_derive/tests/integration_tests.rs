@@ -3,7 +3,7 @@ use std::str::FromStr;
 use ulid::Ulid;
 use uuid::Uuid;
 
-use entity_id::EntityId;
+use entity_id_derive::EntityId;
 
 #[derive(EntityId, Debug)]
 #[entity_id(prefix = "user")]
