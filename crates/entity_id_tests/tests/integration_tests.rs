@@ -1,6 +1,5 @@
-use ulid::Ulid;
-
 use entity_id::EntityId;
+use ulid::Ulid;
 
 #[derive(EntityId, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Clone, Copy)]
 #[entity_id(prefix = "user")]
