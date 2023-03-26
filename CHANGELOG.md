@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.2] - 2023-03-26
+
 ### Added
 
 - Added `PREFIX` associated constant to `EntityId`s
@@ -21,5 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release
 
-[unreleased]: https://github.com/maxdeviant/entity-id/compare/v0.0.1...HEAD
+[unreleased]: https://github.com/maxdeviant/entity-id/compare/v0.0.2...HEAD
+[0.0.2]: https://github.com/maxdeviant/entity-id/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/maxdeviant/entity-id/compare/1140d8f...v0.0.1

@@ -1,6 +1,6 @@
 [package]
 name = "entity_id_core"
-version = "0.0.1"
+version = "0.0.2"
 description = "Production-ready entity IDs for your web application"
 repository = "https://github.com/maxdeviant/entity-id"
 documentation = "https://docs.rs/entity_id_core"
