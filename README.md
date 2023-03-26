@@ -7,6 +7,12 @@
 
 Production-grade entity IDs for your web application.
 
+## Features
+
+- All the features of [ULIDs](https://github.com/ulid/spec)
+- Prefixed IDs à la Stripe (`cus_01gwfyayqspvsdqzd32nh44psh`)
+- Easy conversion to and from UUIDs
+
 ## Usage
 
 ```rust
