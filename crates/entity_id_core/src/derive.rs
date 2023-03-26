@@ -76,24 +76,28 @@ pub fn expand_derive_entity_id(
             }
         }
 
+        #[automatically_derived]
         impl std::fmt::Display for #name {
             fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(f, "{}_{}", #prefix, self.0.to_string().to_lowercase())
             }
         }
 
+        #[automatically_derived]
         impl From<uuid::Uuid> for #name {
             fn from(value: uuid::Uuid) -> Self {
                 Self(ulid::Ulid::from(value))
             }
         }
 
+        #[automatically_derived]
         impl From<#name> for uuid::Uuid {
             fn from(value: #name) -> Self {
                 Self::from(value.0)
             }
         }
 
+        #[automatically_derived]
         impl std::str::FromStr for #name {
             type Err = ulid::DecodeError;
 
@@ -104,6 +108,7 @@ pub fn expand_derive_entity_id(
             }
         }
 
+        #[automatically_derived]
         impl TryFrom<String> for #name {
             type Error = ulid::DecodeError;
 
@@ -114,6 +119,7 @@ pub fn expand_derive_entity_id(
             }
         }
 
+        #[automatically_derived]
         impl TryFrom<&str> for #name {
             type Error = ulid::DecodeError;
 
