@@ -2,7 +2,7 @@ use ulid::Ulid;
 
 use entity_id::EntityId;
 
-#[derive(EntityId, Debug)]
+#[derive(EntityId, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Clone, Copy)]
 #[entity_id(prefix = "user")]
 struct UserId(Ulid);
 

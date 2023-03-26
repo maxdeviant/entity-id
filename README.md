@@ -12,7 +12,7 @@ Production-grade entity IDs for your web application.
 use entity_id::EntityId;
 use ulid::Ulid;
 
-#[derive(EntityId, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Clone)]
+#[derive(EntityId, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Clone, Copy)]
 #[entity_id(prefix = "movie")]
 struct MovieId(Ulid);
 

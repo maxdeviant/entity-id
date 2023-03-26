@@ -2,6 +2,11 @@ mod derive;
 
 pub use derive::*;
 
+pub trait EntityId:
+    std::fmt::Debug + PartialEq + Eq + PartialOrd + Ord + std::hash::Hash + Clone + Copy
+{
+}
+
 #[inline]
 pub fn unprefix_id(value: &str) -> &str {
     value.split('_').last().unwrap_or(value)

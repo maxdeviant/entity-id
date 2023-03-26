@@ -98,6 +98,9 @@ pub fn expand_derive_entity_id(
         }
 
         #[automatically_derived]
+        impl entity_id::EntityId for #name {}
+
+        #[automatically_derived]
         impl std::fmt::Display for #name {
             fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(f, "{}_{}", #prefix, self.0.to_string().to_lowercase())
