@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 use entity_id_core::expand_derive_entity_id;
 use proc_macro::TokenStream;
 use quote::quote;
