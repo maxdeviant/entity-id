@@ -16,6 +16,7 @@ edition = "2021"
 proc-macro = true
 
 [dependencies]
+proc-macro2 = "1.0.53"
 quote = "1.0.26"
 syn = "2.0.10"
 ulid = { version = "1.0.0", features = ["uuid"] }

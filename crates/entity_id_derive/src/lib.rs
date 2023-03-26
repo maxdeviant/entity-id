@@ -1,56 +1,29 @@
+mod internals;
+
 use proc_macro::TokenStream;
-use quote::quote;
+use quote::{quote, ToTokens};
 use syn::{self, parse_macro_input, DeriveInput, Token};
 
-use symbols::*;
-
-mod symbols {
-    use std::fmt::{self, Display};
-    use syn::{Ident, Path};
-
-    #[derive(Debug, Clone, Copy)]
-    pub struct Symbol(&'static str);
-
-    impl PartialEq<Symbol> for Ident {
-        fn eq(&self, word: &Symbol) -> bool {
-            self == word.0
-        }
-    }
-
-    impl<'a> PartialEq<Symbol> for &'a Ident {
-        fn eq(&self, word: &Symbol) -> bool {
-            *self == word.0
-        }
-    }
-
-    impl PartialEq<Symbol> for Path {
-        fn eq(&self, word: &Symbol) -> bool {
-            self.is_ident(word.0)
-        }
-    }
-
-    impl<'a> PartialEq<Symbol> for &'a Path {
-        fn eq(&self, word: &Symbol) -> bool {
-            self.is_ident(word.0)
-        }
-    }
-
-    impl Display for Symbol {
-        fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-            formatter.write_str(self.0)
-        }
-    }
-
-    pub const ENTITY_ID: Symbol = Symbol("entity_id");
-
-    pub const PREFIX: Symbol = Symbol("prefix");
-}
+use internals::symbols::*;
 
 #[proc_macro_derive(EntityId, attributes(entity_id))]
 pub fn entity_id(input: TokenStream) -> TokenStream {
-    let input = parse_macro_input!(input as DeriveInput);
+    let mut input = parse_macro_input!(input as DeriveInput);
 
-    let name = input.ident;
+    expand_derive_entity_id(&mut input)
+        .unwrap_or_else(to_compile_errors)
+        .into()
+}
+
+fn to_compile_errors(errors: Vec<syn::Error>) -> proc_macro2::TokenStream {
+    let compile_errors = errors.iter().map(syn::Error::to_compile_error);
+    quote!(#(#compile_errors)*)
+}
+
+fn expand_derive_entity_id(
+    input: &mut DeriveInput,
+) -> Result<proc_macro2::TokenStream, Vec<syn::Error>> {
+    let name = &input.ident;
 
     let mut prefix = None;
 
@@ -89,9 +62,13 @@ pub fn entity_id(input: TokenStream) -> TokenStream {
                 return Ok(());
             }
 
-            Err(meta.error(format!("unrecognized {}", ENTITY_ID)))
+            let path = meta.path.to_token_stream().to_string().replace(' ', "");
+            Err(meta.error(format_args!(
+                "unknown `{}` attribute: `{}`",
+                ENTITY_ID, path
+            )))
         })
-        .expect("failed to parse attribute meta");
+        .map_err(|err| vec![err])?;
     }
 
     let prefix = prefix.unwrap_or("entity".to_string());
@@ -175,5 +152,5 @@ pub fn entity_id(input: TokenStream) -> TokenStream {
         }
     };
 
-    expanded.into()
+    Ok(expanded.into())
 }
