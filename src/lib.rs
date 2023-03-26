@@ -87,7 +87,10 @@ pub fn entity_id(input: TokenStream) -> TokenStream {
                     {
                         prefix = Some(lit.value())
                     } else {
-                        println!("expected a string");
+                        return Err(meta.error(format!(
+                            "expected `{}` attribute to be a string: `{} = \"...\"`",
+                            PREFIX, PREFIX,
+                        )));
                     }
                 }
 
