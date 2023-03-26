@@ -1,6 +1,6 @@
 mod symbols;
 
-use proc_macro2::TokenStream;
+use proc_macro2::{Ident, TokenStream};
 use quote::{quote, ToTokens};
 use syn::{self, DeriveInput, Token};
 
@@ -57,54 +57,20 @@ pub fn expand_derive_entity_id(input: &mut DeriveInput) -> Result<TokenStream, V
 
     let prefix = prefix.unwrap_or("entity".to_string());
 
-    let prefix_doc_string = format!("The prefix used for a [`{}`].", name);
-    let new_doc_string = format!("Returns a new [`{}`].", name);
+    let self_impl = generate_self_impl(&name, &prefix);
+    let entity_id_impl = generate_entity_id_impl(&name);
+    let display_impl = generate_display_impl(&name, &prefix);
 
     let uuid_impls = if cfg!(feature = "uuid") {
-        quote! {
-            #[automatically_derived]
-            impl From<uuid::Uuid> for #name {
-                fn from(value: uuid::Uuid) -> Self {
-                    Self(ulid::Ulid::from(value))
-                }
-            }
-
-            #[automatically_derived]
-            impl From<#name> for uuid::Uuid {
-                fn from(value: #name) -> Self {
-                    Self::from(value.0)
-                }
-            }
-        }
+        generate_uuid_impls(&name)
     } else {
         TokenStream::new()
     };
 
     let expanded = quote! {
-        impl #name {
-            #[doc = #prefix_doc_string]
-            pub const PREFIX: &'static str = #prefix;
-
-            #[doc = #new_doc_string]
-            pub fn new() -> Self {
-                Self(ulid::Ulid::new())
-            }
-
-            pub fn unprefixed(&self) -> String {
-                self.0.to_string().to_lowercase()
-            }
-        }
-
-        #[automatically_derived]
-        impl entity_id::EntityId for #name {}
-
-        #[automatically_derived]
-        impl std::fmt::Display for #name {
-            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                write!(f, "{}_{}", #prefix, self.0.to_string().to_lowercase())
-            }
-        }
-
+        #self_impl
+        #entity_id_impl
+        #display_impl
         #uuid_impls
 
         #[automatically_derived]
@@ -142,4 +108,73 @@ pub fn expand_derive_entity_id(input: &mut DeriveInput) -> Result<TokenStream, V
     };
 
     Ok(expanded.into())
+}
+
+/// Returns the generated implementation for the struct deriving `EntityId`.
+///
+/// ```ignore
+/// impl #name {
+///   // ...
+/// }
+/// ```
+fn generate_self_impl(name: &Ident, prefix: &str) -> TokenStream {
+    let prefix_doc_string = format!("The prefix used for a [`{}`].", name);
+    let new_doc_string = format!("Returns a new [`{}`].", name);
+
+    quote! {
+        impl #name {
+            #[doc = #prefix_doc_string]
+            pub const PREFIX: &'static str = #prefix;
+
+            #[doc = #new_doc_string]
+            pub fn new() -> Self {
+                Self(ulid::Ulid::new())
+            }
+
+            pub fn unprefixed(&self) -> String {
+                self.0.to_string().to_lowercase()
+            }
+        }
+    }
+}
+
+/// Returns the generated implementation for [`entity_id_core::EntityId`].
+fn generate_entity_id_impl(name: &Ident) -> TokenStream {
+    quote! {
+        #[automatically_derived]
+        impl entity_id::EntityId for #name {}
+    }
+}
+
+/// Returns the generated implementation for [`std::fmt::Display`].
+fn generate_display_impl(name: &Ident, prefix: &str) -> TokenStream {
+    quote! {
+        #[automatically_derived]
+        impl std::fmt::Display for #name {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(f, "{}_{}", #prefix, self.0.to_string().to_lowercase())
+            }
+        }
+    }
+}
+
+/// Returns the generated implementations for converting to and from [`uuid::Uuid`].
+///
+/// These should only be generated when the `uuid` feature is enabled.
+fn generate_uuid_impls(name: &Ident) -> TokenStream {
+    quote! {
+        #[automatically_derived]
+        impl From<uuid::Uuid> for #name {
+            fn from(value: uuid::Uuid) -> Self {
+                Self(ulid::Ulid::from(value))
+            }
+        }
+
+        #[automatically_derived]
+        impl From<#name> for uuid::Uuid {
+            fn from(value: #name) -> Self {
+                Self::from(value.0)
+            }
+        }
+    }
 }
