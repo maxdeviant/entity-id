@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added `PREFIX` associated constant to `EntityId`s
+
 ### Fixed
 
 - Fully qualified identifiers in generated `impl`
@@ -17,4 +21,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release
 
+[unreleased]: https://github.com/maxdeviant/entity-id/compare/v0.0.1...HEAD
 [0.0.1]: https://github.com/maxdeviant/entity-id/compare/1140d8f...v0.0.1
