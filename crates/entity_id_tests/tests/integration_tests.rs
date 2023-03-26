@@ -25,6 +25,7 @@ fn unprefixed_returns_the_id_without_the_prefix() {
     assert_eq!(user_id.unprefixed(), user_id.0.to_string().to_lowercase());
 }
 
+#[cfg(feature = "uuid")]
 #[test]
 fn entity_id_from_uuid() {
     use uuid::Uuid;
@@ -36,6 +37,7 @@ fn entity_id_from_uuid() {
     assert_eq!(user_id.to_string(), "user_0mm86njkb89fftnhme3br3fmc3");
 }
 
+#[cfg(feature = "uuid")]
 #[test]
 fn uuid_from_entity_id() {
     use std::str::FromStr;

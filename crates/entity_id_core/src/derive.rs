@@ -83,6 +83,7 @@ pub fn expand_derive_entity_id(
             }
         }
 
+        #[cfg(feature = "uuid")]
         #[automatically_derived]
         impl From<uuid::Uuid> for #name {
             fn from(value: uuid::Uuid) -> Self {
@@ -90,6 +91,7 @@ pub fn expand_derive_entity_id(
             }
         }
 
+        #[cfg(feature = "uuid")]
         #[automatically_derived]
         impl From<#name> for uuid::Uuid {
             fn from(value: #name) -> Self {
