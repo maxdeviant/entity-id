@@ -1,6 +1,13 @@
 [package]
 name = "entity_id"
 version = "0.0.1"
+description = "Production-ready entity IDs for your web application"
+repository = "https://github.com/maxdeviant/entity-id"
+documentation = "https://docs.rs/entity_id"
+categories = ["web-programming"]
+keywords = ["entity", "id", "identifier", "ulid", "derive"]
+authors = ["Marshall Bowers <elliott.codes@gmail.com>"]
+license = "MIT"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
